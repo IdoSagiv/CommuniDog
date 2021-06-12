@@ -34,4 +34,5 @@ All the users must be approved by the community center for foster dogs.
 
 ## instructions for running the app:
 * In your first use you must register. You need to enter a valid Id.
+* you can use this existing user: id: 111111111 password: 1234
 * Find your dog's service!
