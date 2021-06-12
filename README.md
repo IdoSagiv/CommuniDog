@@ -35,3 +35,7 @@ All the users must be approved by the community center for foster dogs.
 ## instructions for running the app:
 * In your first use you must register. You need to enter a valid Id.
 * Find your dog's service!
+
+
+## suggestion to improve the README: I can't find any suggestions to improve the README.
+# it is very clear and the installation was very easy to me. nice job.
