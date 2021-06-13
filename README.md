@@ -47,6 +47,8 @@ Note: to keep our community safe and secure, only users approved by the communit
 **note** To try out the app, you can contact one of the founders to get login details of a dummy user
 * To set up a new service, perform a long press anywhere on the screen. then, a new window pops up, where you
 can edit your service or create a new one.
+* To see more information about the israeli community center for foster dogs, click the <p align="center">
+                  <img src="images/info_button.png" width="200"></p> button
 
 ## Founders
 [Lotan Aharoni](https://github.com/lotanaharoni) [Hadas Aizik](https://github.com/hadasAizik) [Ido Sagiv](https://github.com/IdoSagiv)
