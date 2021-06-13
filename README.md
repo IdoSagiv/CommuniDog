@@ -7,7 +7,7 @@ Note: to keep our community safe and secure, only users approved by the communit
 ## Notes for open-source contributers
 * [![License](https://img.shields.io/badge/License-MIT-red.svg)](https://www.mit.edu/~amini/LICENSE.md)
 * The app is written in [Android Studio](https://developer.android.com/studio) (version 4.1 at least) using Java - Supported from API level 16 and more.
-* We are using [Firebase](https://firebase.google.com/) platform to store all relevant data about users and app data.
+* We are using [Firebase](https://firebase.google.com/) platform to restore all relevant data about users and app data.
 * The map service is Open-Street Map Package
 * The app requires an internet connection to work properly and works best with location services (GPS) enabled.
 * Every change in the code, requires a proper and well documented pull request.
@@ -33,8 +33,8 @@ Note: to keep our community safe and secure, only users approved by the communit
 * Make sure to sync the 'build.gradle' files (in the app folder and in the main folder).
 * You can choose to run the app on your phone or on an emulator that has an android os.
 * For best results, we recommend running the app on your own android phone, or if not possible use pixel 3 emulator.
-* To control your location on an emulator - open the emulator, click on the 3 dots by it and then enter location to set emulator in.
-* If you have any problems during the installation, see [Q&A page](https://github.com/IdoSagiv/CommuniDog/wiki/Q&A)
+* To control your location in emulator - open the emulator, click on the 3 dots by it and then enter location to set emulator in.
+* If you have any problem during the installation, see [Q&A page](https://github.com/IdoSagiv/CommuniDog/wiki/Q&A)
 
 ## instructions for running the app:
 * Sign up, make sure to provide a valid Israeli ID number that is approved by the community center for foster dogs.
