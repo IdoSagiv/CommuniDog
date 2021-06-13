@@ -4,6 +4,11 @@ With CommuniDog, finding a guide-dog-friendly (and certified) doggy-sitter, shar
 
 Note: to keep our community safe and secure, only users approved by the community center for foster dogs are allowed.
 
+<p align="center">
+    <img src="images/app3.png" width="200">
+    <img src="images/app4.png" width="200">
+</p>
+
 ## Notes for open-source contributers
 * [![License](https://img.shields.io/badge/License-MIT-red.svg)](https://www.mit.edu/~amini/LICENSE.md)
 * The app is written in Android Studio (version 4.1 at least) using Java - Supported from API level 16 and more.
