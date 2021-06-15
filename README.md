@@ -34,6 +34,9 @@ Note: to keep our community safe and secure, only users approved by the communit
   * Note: For best results, we recommend running the app on your own android phone.
 * Make sure to sync the 'build.gradle' files (in the app folder and in the main folder).
 * If you have any problems during the installation, see [Q&A page](https://github.com/IdoSagiv/CommuniDog/wiki/Q&A)
+* If you just want to try the app you can download the apk from the QR code below, authorize installation from unkown sources and install:
+* ![Screenshot 2021-06-15 at 11-50-26 QR Code Generator Create Your Free QR Codes](https://user-images.githubusercontent.com/67260757/122023247-083c6700-cdd0-11eb-984e-e22567bbd0cf.png)
+
 
 ## Instructions for running the app:
 * Sign up, make sure to provide a valid Israeli ID number that is approved by the community center for foster dogs.
