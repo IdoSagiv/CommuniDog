@@ -1,9 +1,7 @@
 package communi.dog.aplicatiion;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,8 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -25,16 +21,9 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.osmdroid.config.Configuration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class MapScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    DrawerLayout moreInfoDrawerLayout;
-    NavigationView navigationView;
-
-    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    private DrawerLayout moreInfoDrawerLayout;
     private MapHandler mMapHandler;
 
     @Override
@@ -42,18 +31,11 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
         System.out.println("MainActivity.onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
-        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        Configuration.getInstance().load(   this, PreferenceManager.getDefaultSharedPreferences(this));
 
         // more info bar
         initMoreInfoBar();
 
-        requestPermissionsIfNecessary(new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE,
-                Manifest.permission.INTERNET
-        });
         boolean centerToMyLocation = getIntent().getBooleanExtra("center_to_my_location", true);
         mMapHandler = new MapHandler(findViewById(R.id.mapView), CommuniDogApp.getInstance().getMapState(), centerToMyLocation);
 
@@ -102,37 +84,9 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
 
     private void initMoreInfoBar() {
         moreInfoDrawerLayout = findViewById(R.id.drawer_layout_more_info);
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         moreInfoDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void requestPermissionsIfNecessary(String[] permissions) {
-        ArrayList<String> permissionsToRequest = new ArrayList<>();
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission)
-                    != PackageManager.PERMISSION_GRANTED) {
-                permissionsToRequest.add(permission);
-            }
-        }
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
-        ArrayList<String> permissionsToRequest =
-                new ArrayList<>(Arrays.asList(permissions).subList(0, grantResults.length));
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
     }
 
     @Override
