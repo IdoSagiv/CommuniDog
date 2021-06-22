@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#DEE4EF"
     android:layout_height="match_parent">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,5 +46,5 @@
                 android:layout_marginRight="10dp"
                 android:text="@string/about_section_text" />
         </androidx.cardview.widget.CardView>
-
+    </ScrollView>
 </RelativeLayout>
