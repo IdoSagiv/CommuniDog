@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // login button
         loginButton = findViewById(R.id.login_button);
+        loginButton.setEnabled(false);
         loginButton.setOnClickListener(v -> {
             FirebaseAuth auth = db.getUsersAuthenticator();
             auth.signInWithEmailAndPassword(emailEditText.getText().toString(),
