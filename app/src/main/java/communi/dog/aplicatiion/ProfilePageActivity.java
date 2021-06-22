@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,8 +23,6 @@ public class ProfilePageActivity extends AppCompatActivity {
     private EditText phoneEditText;
     private EditText bioEditText;
     private ImageView btnEditProfile;
-    private TextView btnMyMarker;
-    private ImageButton btnBackToMap;
     private ImageView btnCancelEdit;
     private boolean isEdit = false;
     private DB appDB;
@@ -32,6 +31,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     private String emailBeforeEdit;
     private String phoneBeforeEdit;
     private String bioBeforeEdit;
+    private KeyListener bioEditTextKeyListener;
 
 
     @Override
@@ -46,16 +46,17 @@ public class ProfilePageActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.usersEmailMyProfile);
         phoneEditText = findViewById(R.id.usersPhoneMyProfile);
         bioEditText = findViewById(R.id.profile_bio);
+        bioEditTextKeyListener = bioEditText.getKeyListener();
 
-        btnMyMarker = findViewById(R.id.profile_to_my_marker);
-        btnBackToMap = findViewById(R.id.backToMapFromProfile);
+        TextView btnMyMarker = findViewById(R.id.profile_to_my_marker);
+        ImageButton btnBackToMap = findViewById(R.id.backToMapFromProfile);
         btnCancelEdit = findViewById(R.id.btnCancelEditProfile);
         btnEditProfile = findViewById(R.id.btnEditProfile);
 
         dogNameEditText.setEnabled(false);
         emailEditText.setEnabled(false);
         phoneEditText.setEnabled(false);
-        bioEditText.setEnabled(false);
+        bioEditText.setKeyListener(null); // bio edittext won't listen to new keys (cant edit it)
 
         usernameEditText.setText(currentUser.getUserName());
         dogNameEditText.setText(currentUser.getUserDogName());
@@ -147,11 +148,12 @@ public class ProfilePageActivity extends AppCompatActivity {
     private void setViewsByState(boolean isEditState) {
         if (isEditState) {
             btnCancelEdit.setVisibility(View.VISIBLE);
+            bioEditText.setKeyListener(bioEditTextKeyListener); // bio edittext won't listen to new keys (cant edit it)
         } else {
             btnCancelEdit.setVisibility(View.GONE);
+            bioEditText.setKeyListener(null); // bio edittext won't listen to new keys (cant edit it)
         }
         dogNameEditText.setEnabled(isEditState);
-        bioEditText.setEnabled(isEditState);
         emailEditText.setEnabled(isEditState);
         phoneEditText.setEnabled(isEditState);
         int edit_ic = isEditState ? R.drawable.ic_save_profile : R.drawable.ic_edit_profile;
