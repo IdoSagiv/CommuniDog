@@ -6,31 +6,26 @@ import java.io.Serializable;
  * class that stores the information of a marker
  */
 public class MarkerDescriptor implements Serializable {
+    private String text;
     private double latitude;
     private double longitude;
-    private String text;
+    private boolean dogsitter;
+    private boolean food;
+    private boolean medication;
     private String id; //final
-    private boolean isDogsitter;
-    private boolean isFood;
-    private boolean isMedication;
 
     MarkerDescriptor(String text, double latitude, double longitude, boolean isDogsitter, boolean isFood, boolean isMedication, String creatorUserId) {
+        this.text = text;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.text = text;
-        this.id = generateMarkerId(creatorUserId);
-        this.isDogsitter = isDogsitter;
-        this.isFood = isFood;
-        this.isMedication = isMedication;
+        this.dogsitter = isDogsitter;
+        this.food = isFood;
+        this.medication = isMedication;
+        this.id = creatorUserId;
     }
 
     // empty constructor for FireBase redundant
     public MarkerDescriptor() {
-    }
-
-    private String generateMarkerId(String userId) {
-        // todo: maybe not just the user id? if not than this field is redundant
-        return userId;
     }
 
     public void setNewLocation(double latitude, double longitude) {
@@ -39,9 +34,9 @@ public class MarkerDescriptor implements Serializable {
     }
 
     public void setServices(boolean isDogsitter, boolean isFood, boolean isMedication) {
-        this.isDogsitter = isDogsitter;
-        this.isFood = isFood;
-        this.isMedication = isMedication;
+        this.dogsitter = isDogsitter;
+        this.food = isFood;
+        this.medication = isMedication;
     }
 
     public void setText(String text) {
@@ -49,15 +44,15 @@ public class MarkerDescriptor implements Serializable {
     }
 
     public boolean isDogsitter() {
-        return isDogsitter;
+        return dogsitter;
     }
 
     public boolean isFood() {
-        return isFood;
+        return food;
     }
 
     public boolean isMedication() {
-        return isMedication;
+        return medication;
     }
 
     public double getLatitude() {
@@ -83,9 +78,9 @@ public class MarkerDescriptor implements Serializable {
 
     private String generateText(User user) {
         String msg = user.getUserName() + " offers:\n";
-        if (isDogsitter) msg += "Dogsitter services\n";
-        if (isFood) msg += "Extra food\n";
-        if (isMedication) msg += "Extra medication\n";
+        if (dogsitter) msg += "Dogsitter services\n";
+        if (food) msg += "Extra food\n";
+        if (medication) msg += "Extra medication\n";
         String contacts = "";
         if (!user.getEmail().isEmpty())
             contacts += "Email - " + user.getEmail() + "\n";
