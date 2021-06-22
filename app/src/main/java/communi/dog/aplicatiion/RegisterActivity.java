@@ -161,4 +161,10 @@ public class RegisterActivity extends AppCompatActivity {
         return text.getText().toString().isEmpty();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent backToLoginIntent = new Intent(this, LoginActivity.class);
+        startActivity(backToLoginIntent);
+    }
 }
