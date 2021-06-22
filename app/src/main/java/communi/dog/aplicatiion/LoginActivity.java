@@ -3,10 +3,14 @@ package communi.dog.aplicatiion;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
@@ -21,7 +25,11 @@ import android.text.TextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity {
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     private DB db;
     private EditText emailEditText;
@@ -64,7 +72,15 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("LoginActivity", "signInWithEmail:success");
                     FirebaseUser user = auth.getCurrentUser();
                     db.setCurrentUser(user);
-                    updateUI();
+
+                    // if all permissions approved, update UI
+                    requestPermissionsIfNecessary(new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_NETWORK_STATE,
+                            Manifest.permission.ACCESS_WIFI_STATE,
+                            Manifest.permission.INTERNET
+                    });
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("LoginActivity", "signInWithEmail:failure", task.getException());
@@ -112,6 +128,59 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void updateLoginButtonState() {
+        loginButton.setEnabled(!emailEditText.getText().toString().isEmpty() &&
+                !passwordEditText.getText().toString().isEmpty());
+    }
+
+
+    private void requestPermissionsIfNecessary(String[] permissions) {
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(permission);
+            }
+        }
+        if (permissionsToRequest.size() > 0) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    permissionsToRequest.toArray(new String[0]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        } else{
+            updateUI();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for (int grantResult : grantResults) {
+            if (grantResult == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(this, "cant work without permissions", Toast.LENGTH_SHORT).show();
+                db.logoutUser();
+                return;
+            }
+        }
+        updateUI();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("userEmail", emailEditText.getText().toString());
+        outState.putString("userPassword", passwordEditText.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        emailEditText.setText(savedInstanceState.getString("userEmail"));
+        passwordEditText.setText(savedInstanceState.getString("userPassword"));
+        updateLoginButtonState();
+    }
+
     @Override
     public void onBackPressed() {
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
@@ -128,25 +197,5 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Close the app?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-    }
-
-    private void updateLoginButtonState() {
-        loginButton.setEnabled(!emailEditText.getText().toString().isEmpty() &&
-                !passwordEditText.getText().toString().isEmpty());
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("userEmail", emailEditText.getText().toString());
-        outState.putString("userPassword", passwordEditText.getText().toString());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        emailEditText.setText(savedInstanceState.getString("userEmail"));
-        passwordEditText.setText(savedInstanceState.getString("userPassword"));
-        updateLoginButtonState();
     }
 }
