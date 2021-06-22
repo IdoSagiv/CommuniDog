@@ -7,8 +7,9 @@
     android:background="@drawable/profile_bg2"
     tools:context=".ProfilePageActivity">
 
+    <!--  logo  -->
     <ImageView
-        android:id="@+id/logo_image_in_login"
+        android:id="@+id/logo_image_in_profile"
         android:layout_width="159dp"
         android:layout_height="119dp"
         android:layout_marginTop="20dp"
@@ -20,83 +21,92 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_full" />
 
-    <LinearLayout
-        android:id="@+id/linearLayoutUserInfo"
+    <!--  user info scroll view  -->
+    <ScrollView
+        android:id="@+id/scrollViewUserInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo_image_in_login">
+        app:layout_constraintBottom_toTopOf="@id/profile_to_my_marker"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintTop_toBottomOf="@id/logo_image_in_profile">
 
-        <TextView
-            android:id="@+id/profile_user_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_my_profile_small"
-            android:drawablePadding="10dp"
-            android:hint="@string/username_field"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/profile_dog_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@null"
-            android:drawableStart="@drawable/ic_dog_face"
-            android:drawablePadding="10dp"
-            android:hint="@string/dog_name_filed"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/profile_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_my_profile_small"
+                android:drawablePadding="10dp"
+                android:hint="@string/username_field"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/usersEmailMyProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@null"
-            android:drawableStart="@drawable/ic_contact_mail"
-            android:drawablePadding="10dp"
-            android:hint="@string/email_field"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            <EditText
+                android:id="@+id/profile_dog_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_dog_face"
+                android:drawablePadding="10dp"
+                android:hint="@string/dog_name_filed"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/usersPhoneMyProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@null"
-            android:drawableStart="@drawable/ic_phone"
-            android:drawablePadding="10dp"
-            android:digits="0123456789"
-            android:maxLength="10"
-            android:inputType="number"
-            android:hint="@string/phone_number_field"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            <EditText
+                android:id="@+id/usersEmailMyProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_contact_mail"
+                android:drawablePadding="10dp"
+                android:hint="@string/email_field"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/profile_bio"
-            android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:layout_marginTop="8dp"
-            android:background="@null"
-            android:hint="@string/add_bio"
-            android:maxLines="3"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            <EditText
+                android:id="@+id/usersPhoneMyProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="10dp"
+                android:hint="@string/phone_number_field"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/profile_bio"
+                android:layout_width="match_parent"
+                android:layout_height="104dp"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:hint="@string/add_bio"
+                android:maxLines="3"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
+        </LinearLayout>
+    </ScrollView>
+
+    <!--  logout button  -->
     <ImageView
         android:id="@+id/logoutButton"
         android:layout_width="20dp"
@@ -108,12 +118,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <!-- my marker button -->
     <TextView
         android:id="@+id/profile_to_my_marker"
         android:layout_width="159dp"
         android:layout_height="28dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/white"
         android:text="@string/my_marker"
         android:textAlignment="center"
@@ -123,13 +133,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!--  Edit buttons  -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/linearLayoutUserInfo"
-        app:layout_constraintEnd_toEndOf="@id/linearLayoutUserInfo">
+        app:layout_constraintBottom_toTopOf="@id/scrollViewUserInfo"
+        app:layout_constraintEnd_toEndOf="@id/scrollViewUserInfo">
 
         <ImageView
             android:id="@+id/btnCancelEditProfile"
@@ -145,9 +156,9 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_edit_profile" />
 
-
     </LinearLayout>
 
+    <!--  Back button  -->
     <ImageButton
         android:id="@+id/backToMapFromProfile"
         android:layout_width="wrap_content"
