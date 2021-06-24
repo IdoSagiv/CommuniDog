@@ -22,7 +22,7 @@ public class AboutPage extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int) (width*.7), (int )(height*.5));
+        getWindow().setLayout((int) (width * .7), (int) (height * .5));
 
     }
 

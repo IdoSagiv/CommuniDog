@@ -16,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.CommuniDog">
-        <activity android:name=".UserApprovalActivity"></activity>
+        <activity android:name=".UserApprovalActivity" />
         <activity android:name=".Emergency_numbers" />
-        <activity android:name=".AboutPage"
+        <activity
+            android:name=".AboutPage"
             android:theme="@style/AppTheme.CustomThemeAbout" />
         <activity android:name=".ProfilePageActivity" />
         <activity android:name=".RegisterActivity" />
