@@ -109,5 +109,6 @@ public class AddMarkerActivity extends AppCompatActivity {
         Intent backToMapIntent = new Intent(this, MapScreenActivity.class);
         backToMapIntent.putExtra("center_to_my_location", false);
         startActivity(backToMapIntent);
+        finish();
     }
 }
