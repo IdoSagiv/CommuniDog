@@ -25,16 +25,21 @@ import org.osmdroid.config.Configuration;
 public class MapScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout moreInfoDrawerLayout;
     private MapHandler mMapHandler;
+    private DB appDB;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         System.out.println("MainActivity.onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
+
         Configuration.getInstance().load(   this, PreferenceManager.getDefaultSharedPreferences(this));
 
         // more info bar
+        this.appDB = CommuniDogApp.getInstance().getDb();
         initMoreInfoBar();
+
 
         boolean centerToMyLocation = getIntent().getBooleanExtra("center_to_my_location", true);
         mMapHandler = new MapHandler(findViewById(R.id.mapView), CommuniDogApp.getInstance().getMapState(), centerToMyLocation);
@@ -98,7 +103,9 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE: {
-                    finish();
+                    // finish();
+                    finishAffinity();
+                    System.exit(0);
                     break;
                 }
                 case DialogInterface.BUTTON_NEGATIVE:
@@ -131,7 +138,9 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
             case R.id.about_section:
                 startActivity(new Intent(MapScreenActivity.this, AboutPage.class));
                 break;
-
+            case R.id.logout:
+                logout();
+                break;
         }
         return true;
     }
@@ -160,5 +169,19 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
 
     public void notificationsActivity(View view) {
         startActivity(new Intent(getApplicationContext(), UserApprovalActivity.class));
+    }
+
+    public void logout() {
+        // negative is positive and vice versa to allow yes on left and no on right
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to logout?").setCancelable(false);
+        builder.setNegativeButton("Yes", (dialogInterface, i) -> {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            appDB.logoutUser();
+            startActivity(intent);
+        });
+        builder.setPositiveButton("No", (dialogInterface, i) -> dialogInterface.cancel());
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
