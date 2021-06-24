@@ -187,7 +187,9 @@ public class LoginActivity extends AppCompatActivity {
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE: {
-                    finish();
+                    // finish();
+                    finishAffinity();
+                    System.exit(0);
                     break;
                 }
                 case DialogInterface.BUTTON_NEGATIVE:
