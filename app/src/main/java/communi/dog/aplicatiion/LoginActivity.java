@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         this.db = CommuniDogApp.getInstance().getDb();
 
-        // fiend email and password views
+        // find email and password views
         emailEditText = findViewById(R.id.input_email_login);
         passwordEditText = findViewById(R.id.user_password);
 
@@ -130,7 +131,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateLoginButtonState() {
-        loginButton.setEnabled(!emailEditText.getText().toString().isEmpty() &&
+        String email = emailEditText.getText().toString();
+        loginButton.setEnabled(!email.isEmpty() && email.length() <= 254 &&
+                Patterns.EMAIL_ADDRESS.matcher(email).matches() &&
                 !passwordEditText.getText().toString().isEmpty());
     }
 

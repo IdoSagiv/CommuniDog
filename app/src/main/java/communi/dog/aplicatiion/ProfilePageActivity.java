@@ -148,7 +148,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     private void setViewsByState(boolean isEditState) {
         if (isEditState) {
             btnCancelEdit.setVisibility(View.VISIBLE);
-            bioEditText.setKeyListener(bioEditTextKeyListener); // bio edittext won't listen to new keys (cant edit it)
+            bioEditText.setKeyListener(bioEditTextKeyListener); // bio edittext will listen to new keys
         } else {
             btnCancelEdit.setVisibility(View.GONE);
             bioEditText.setKeyListener(null); // bio edittext won't listen to new keys (cant edit it)
