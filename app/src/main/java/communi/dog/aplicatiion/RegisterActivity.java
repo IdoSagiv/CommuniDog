@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
+
 public class RegisterActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -27,6 +29,11 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerBtn;
     private TextView to_login_btn;
     private DB db;
+    enum Length{
+        LARGE,
+        SHORT,
+        VALID
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +104,14 @@ public class RegisterActivity extends AppCompatActivity {
         return !(isEmptyEditText(emailEditText) || isEmptyEditText(passwordEditText) || isEmptyEditText(rePasswordEditText));
     }
 
-
     void tryToRegister() {
         boolean valid_input = true;
         if (!isEmail(emailEditText)) {
             emailEditText.setError("invalid email");
             valid_input = false;
         }
-        if (!isValidPassword(passwordEditText.getText().toString())) {
+        // there is no limit on the password length since it is bad practice
+        if (isValidLength(passwordEditText.getText().toString(), 6, -1) != Length.VALID) {
             passwordEditText.setError("password should has least 6 characters");
             valid_input = false;
         } else {
@@ -112,6 +119,13 @@ public class RegisterActivity extends AppCompatActivity {
                 rePasswordEditText.setError("does not match");
                 valid_input = false;
             }
+        }
+        Length nameLen = isValidLength(userNameEditText.getText().toString(), 3, 64);
+        if (nameLen != Length.VALID)
+        {
+            valid_input = false;
+            String error = nameLen == Length.LARGE ? "name is too large" : "name is too short";
+            userNameEditText.setError(error);
         }
 
         if (!valid_input) return;
@@ -148,13 +162,23 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isValidPassword(String pass) {
-        return pass.length() >= 6;
+    private Length isValidLength(String input, int min, int max)
+    {
+        if (max != -1 && input.length() > max)
+        {
+            return Length.LARGE;
+        }
+        if (input.length() < min)
+        {
+            return Length.SHORT;
+        }
+        return Length.VALID;
     }
 
     boolean isEmail(EditText text) {
         CharSequence email = text.getText().toString();
-        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+        return (isValidLength(email.toString(), 1, 254) == Length.VALID &&
+                Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
     boolean isEmptyEditText(EditText text) {
