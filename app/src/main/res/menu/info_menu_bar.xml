@@ -2,33 +2,37 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single"
-        android:id="@+id/infoSectio">
+        android:id="@+id/infoSection">
 
         <item
             android:id="@+id/law"
             android:icon="@drawable/law_icon"
-            android:title="Non-discrimination law" />
+            android:title="Non-discrimination law"
+            android:checkable="false"/>
 
         <item
             android:id="@+id/dog_site_link"
             android:icon="@drawable/earth_site_icon"
-            android:title="Israeli Guide Dog Center website" />
+            android:title="Israeli Guide Dog Center website"
+            android:checkable="false"/>
 
         <item
             android:id="@+id/link_to_drive"
             android:icon="@drawable/question_answer"
-            android:title="QA drive link" />
+            android:title="QA drive link"
+            android:checkable="false"/>
 
         <item
             android:id="@+id/emergency_num"
             android:icon="@drawable/ic_phone"
-            android:title="emergency numbers" />
+            android:title="emergency numbers"
+            android:checkable="false"/>
 
         <item
             android:id="@+id/about_section"
             android:icon="@drawable/ic_info"
             android:title="@string/about_section"
-            />
+            android:checkable="false" />
 
     </group>
 
@@ -39,6 +43,7 @@
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_baseline_exit"
+            android:checkable="false" />
             android:title="Logout" />
     </group>
 
