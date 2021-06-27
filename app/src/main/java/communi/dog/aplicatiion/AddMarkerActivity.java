@@ -88,7 +88,7 @@ public class AddMarkerActivity extends AppCompatActivity {
         });
 
         ImageView buttonCancel = findViewById(R.id.buttonCancelMarker);
-        buttonCancel.setOnClickListener(view -> backToMap());
+        buttonCancel.setOnClickListener(view -> onBackPressed());
     }
 
     private String getMarkerTitle(boolean isDogsitter, boolean isFood, boolean isMedication) {
