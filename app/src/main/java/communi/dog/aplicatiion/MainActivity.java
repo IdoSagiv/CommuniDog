@@ -16,8 +16,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.wait_screen);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         //updateUI(CommuniDogApp.getInstance().getDb().getUsersAuthenticator().getCurrentUser());
+        FirebaseUser currentUser = CommuniDogApp.getInstance().getDb().getUsersAuthenticator().getCurrentUser();
         new Handler().postDelayed(() -> {
-            updateUI(CommuniDogApp.getInstance().getDb().getUsersAuthenticator().getCurrentUser());
+            updateUI(currentUser);
         }, 3000);
     }
 
