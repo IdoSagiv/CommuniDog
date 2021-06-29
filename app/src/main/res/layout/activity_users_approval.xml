@@ -19,7 +19,7 @@
         android:id="@+id/noUsersToApproveTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="no users to approve"
+        android:text="@string/no_users_to_approve"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
