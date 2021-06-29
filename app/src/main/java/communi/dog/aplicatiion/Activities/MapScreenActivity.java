@@ -27,25 +27,20 @@ import communi.dog.aplicatiion.MapHandler;
 import communi.dog.aplicatiion.MapState;
 import communi.dog.aplicatiion.R;
 
-
 public class MapScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout moreInfoDrawerLayout;
     private MapHandler mMapHandler;
     private DB appDB;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         System.out.println("MainActivity.onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
-
-        Configuration.getInstance().load(   this, PreferenceManager.getDefaultSharedPreferences(this));
-
-        // more info bar
         this.appDB = CommuniDogApp.getInstance().getDb();
-        initMoreInfoBar();
 
+        // more info bar initialize
+        initMoreInfoBar();
 
         boolean centerToMyLocation = getIntent().getBooleanExtra("center_to_my_location", true);
         mMapHandler = new MapHandler(findViewById(R.id.mapView), MapState.getInstance(), centerToMyLocation);
@@ -64,31 +59,33 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
             this.startActivity(intent);
         });
 
-        ImageView btCenterMap = findViewById(R.id.buttonCenterMap);
-        btCenterMap.setOnClickListener(v -> mMapHandler.mapToCurrentLocation());
+        // center map button callback
+        findViewById(R.id.buttonCenterMap).setOnClickListener(v -> mMapHandler.mapToCurrentLocation());
 
-        ImageView btnMyProfile = findViewById(R.id.buttonMyProfileInMapActivity);
-        btnMyProfile.setOnClickListener(v -> {
+        // my profile button callback
+        findViewById(R.id.buttonMyProfileInMapActivity).setOnClickListener(v -> {
             mMapHandler.updateCenter();
             startActivity(new Intent(this, ProfilePageActivity.class));
         });
 
-        ImageView btnMoreInfo = findViewById(R.id.buttonMoreInfoMapActivity);
-        btnMoreInfo.setOnClickListener(v -> {
+        // more info button callback
+        findViewById(R.id.buttonMoreInfoMapActivity).setOnClickListener(v -> {
             mMapHandler.updateCenter();
             moreInfoDrawerLayout.openDrawer(GravityCompat.START);
         });
 
+        // update ui upon map data changes
         MapState.getInstance().markersDescriptorsLD.observe(this, markers -> {
             mMapHandler.showMarkers(markers);
         });
 
-        CommuniDogApp.getInstance().getDb().currentUserLiveData.observe(this, user -> {
-            ImageView btnNotification = findViewById(R.id.buttonNotificationActivity);
+        // only manager sees the users approval button
+        appDB.currentUserLiveData.observe(this, user -> {
+            ImageView userApprovalBtn = findViewById(R.id.buttonUserApproval);
             if (user.isManager()) {
-                btnNotification.setVisibility(View.VISIBLE);
+                userApprovalBtn.setVisibility(View.VISIBLE);
             } else {
-                btnNotification.setVisibility(View.GONE);
+                userApprovalBtn.setVisibility(View.GONE);
             }
         });
     }
@@ -100,30 +97,28 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (moreInfoDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            moreInfoDrawerLayout.closeDrawer(GravityCompat.START);
-            return;
-        }
-        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-            switch (which) {
-                case DialogInterface.BUTTON_POSITIVE: {
-                    // finish();
-                    finishAffinity();
-                    System.exit(0);
-                    break;
-                }
-                case DialogInterface.BUTTON_NEGATIVE:
-                    break;
-            }
-        };
+    private void goToUrl(String s) {
+        Uri url = Uri.parse(s);
+        startActivity(new Intent(Intent.ACTION_VIEW, url));
+    }
 
+
+    public void notificationsActivity(View view) {
+        startActivity(new Intent(getApplicationContext(), UserApprovalActivity.class));
+    }
+
+    public void logout() {
+        // negative is positive and vice versa to allow yes on left and no on right
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Close the app?")
-                .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener)
-                .show();
+        builder.setMessage("Are you sure you want to logout?").setCancelable(false);
+        builder.setNegativeButton("Yes", (dialogInterface, i) -> {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            appDB.logoutUser();
+            startActivity(intent);
+        });
+        builder.setPositiveButton("No", (dialogInterface, i) -> dialogInterface.cancel());
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -167,27 +162,29 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
-    private void goToUrl(String s) {
-        Uri url = Uri.parse(s);
-        startActivity(new Intent(Intent.ACTION_VIEW, url));
-    }
+    @Override
+    public void onBackPressed() {
+        if (moreInfoDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            moreInfoDrawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE: {
+                    // finish();
+                    finishAffinity();
+                    System.exit(0);
+                    break;
+                }
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        };
 
-
-    public void notificationsActivity(View view) {
-        startActivity(new Intent(getApplicationContext(), UserApprovalActivity.class));
-    }
-
-    public void logout() {
-        // negative is positive and vice versa to allow yes on left and no on right
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to logout?").setCancelable(false);
-        builder.setNegativeButton("Yes", (dialogInterface, i) -> {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            appDB.logoutUser();
-            startActivity(intent);
-        });
-        builder.setPositiveButton("No", (dialogInterface, i) -> dialogInterface.cancel());
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        builder.setMessage("Close the app?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .show();
     }
 }
