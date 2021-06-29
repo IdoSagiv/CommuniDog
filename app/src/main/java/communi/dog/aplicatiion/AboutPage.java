@@ -23,7 +23,6 @@ public class AboutPage extends Activity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width * .7), (int) (height * .5));
-
     }
 
     private void setupHyperLink() {
