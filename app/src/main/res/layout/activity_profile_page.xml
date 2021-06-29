@@ -29,9 +29,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/profile_to_my_marker"
         android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@id/profile_to_my_marker"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo_image_in_profile">
 
         <LinearLayout
@@ -44,12 +44,12 @@
                 android:id="@+id/profile_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_my_profile_small"
                 android:drawablePadding="10dp"
                 android:hint="@string/username_field"
                 android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                app:drawableStartCompat="@drawable/ic_my_profile_small" />
 
             <EditText
                 android:id="@+id/profile_dog_name"
@@ -176,7 +176,7 @@
         android:id="@+id/logout_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/logout"
         android:textColor="#E62416"
         android:textSize="12sp"
         android:textStyle="bold"
