@@ -15,7 +15,6 @@ import java.util.HashMap;
  * class that stores the information of a map
  */
 public class MapState implements Serializable {
-    // todo: select initial values
     public static final float DEF_LATITUDE = 32.1007f;
     public static final float DEF_LONGITUDE = 34.8070f;
     private final HashMap<String, MarkerDescriptor> markersDescriptors;
@@ -68,7 +67,7 @@ public class MapState implements Serializable {
 
     public void addMarker(MarkerDescriptor toAdd) {
         markersDescriptors.put(toAdd.getId(), toAdd);
-        setCenter(toAdd.getLatitude(), toAdd.getLongitude()); // todo: delete?
+        setCenter(toAdd.getLatitude(), toAdd.getLongitude());
 
         markersDescriptorsMutableLD.setValue(getMarkersDescriptors());
     }
