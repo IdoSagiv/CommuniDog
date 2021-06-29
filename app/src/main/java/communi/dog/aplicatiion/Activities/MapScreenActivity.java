@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,25 +21,26 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.osmdroid.config.Configuration;
 
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.MapHandler;
+import communi.dog.aplicatiion.MapState;
+import communi.dog.aplicatiion.R;
 
 public class MapScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout moreInfoDrawerLayout;
     private MapHandler mMapHandler;
     private DB appDB;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         System.out.println("MainActivity.onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
-
-        Configuration.getInstance().load(   this, PreferenceManager.getDefaultSharedPreferences(this));
-
-        // more info bar
         this.appDB = CommuniDogApp.getInstance().getDb();
-        initMoreInfoBar();
 
+        // more info bar initialize
+        initMoreInfoBar();
 
         boolean centerToMyLocation = getIntent().getBooleanExtra("center_to_my_location", true);
         mMapHandler = new MapHandler(findViewById(R.id.mapView), MapState.getInstance(), centerToMyLocation);
@@ -58,31 +59,33 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
             this.startActivity(intent);
         });
 
-        ImageView btCenterMap = findViewById(R.id.buttonCenterMap);
-        btCenterMap.setOnClickListener(v -> mMapHandler.mapToCurrentLocation());
+        // center map button callback
+        findViewById(R.id.buttonCenterMap).setOnClickListener(v -> mMapHandler.mapToCurrentLocation());
 
-        ImageView btnMyProfile = findViewById(R.id.buttonMyProfileInMapActivity);
-        btnMyProfile.setOnClickListener(v -> {
+        // my profile button callback
+        findViewById(R.id.buttonMyProfileInMapActivity).setOnClickListener(v -> {
             mMapHandler.updateCenter();
             startActivity(new Intent(this, ProfilePageActivity.class));
         });
 
-        ImageView btnMoreInfo = findViewById(R.id.buttonMoreInfoMapActivity);
-        btnMoreInfo.setOnClickListener(v -> {
+        // more info button callback
+        findViewById(R.id.buttonMoreInfoMapActivity).setOnClickListener(v -> {
             mMapHandler.updateCenter();
             moreInfoDrawerLayout.openDrawer(GravityCompat.START);
         });
 
+        // update ui upon map data changes
         MapState.getInstance().markersDescriptorsLD.observe(this, markers -> {
             mMapHandler.showMarkers(markers);
         });
 
-        CommuniDogApp.getInstance().getDb().currentUserLiveData.observe(this, user -> {
-            ImageView btnNotification = findViewById(R.id.buttonNotificationActivity);
+        // only manager sees the users approval button
+        appDB.currentUserLiveData.observe(this, user -> {
+            ImageView userApprovalBtn = findViewById(R.id.buttonUserApproval);
             if (user.isManager()) {
-                btnNotification.setVisibility(View.VISIBLE);
+                userApprovalBtn.setVisibility(View.VISIBLE);
             } else {
-                btnNotification.setVisibility(View.GONE);
+                userApprovalBtn.setVisibility(View.GONE);
             }
         });
     }
@@ -92,6 +95,71 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
         NavigationView navigationView = findViewById(R.id.nav_view);
         moreInfoDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void goToUrl(String s) {
+        Uri url = Uri.parse(s);
+        startActivity(new Intent(Intent.ACTION_VIEW, url));
+    }
+
+
+    public void notificationsActivity(View view) {
+        startActivity(new Intent(getApplicationContext(), UserApprovalActivity.class));
+    }
+
+    public void logout() {
+        // negative is positive and vice versa to allow yes on left and no on right
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to logout?").setCancelable(false);
+        builder.setNegativeButton("Yes", (dialogInterface, i) -> {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            appDB.logoutUser();
+            startActivity(intent);
+        });
+        builder.setPositiveButton("No", (dialogInterface, i) -> dialogInterface.cancel());
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.law:
+                goToUrl("https://fs.knesset.gov.il/20/law/20_lsr_346609.pdf");
+                break;
+            case R.id.dog_site_link:
+                goToUrl("https://israelguidedog.org.il/");
+                break;
+            case R.id.link_to_drive:
+                goToUrl("https://drive.google.com/drive/u/1/folders/1tnP3SC9jdjHN-3QWdvIyb17k71k93hdF");
+                break;
+            case R.id.emergency_num:
+                startActivity(new Intent(MapScreenActivity.this, EmergencyNumbersActivity.class));
+                break;
+            case R.id.about_section:
+                startActivity(new Intent(MapScreenActivity.this, AboutPageActivity.class));
+                break;
+            case R.id.logout:
+                logout();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMapHandler.updateCenter();
+        outState.putBoolean("is_more_info_open", moreInfoDrawerLayout.isDrawerOpen(GravityCompat.START));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        boolean openDrawer = savedInstanceState.getBoolean("is_more_info_open", false);
+        if (openDrawer) {
+            moreInfoDrawerLayout.openDrawer(GravityCompat.START);
+        }
     }
 
     @Override
@@ -118,70 +186,5 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener)
                 .show();
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.law:
-                goToUrl("https://fs.knesset.gov.il/20/law/20_lsr_346609.pdf");
-                break;
-            case R.id.dog_site_link:
-                goToUrl("https://israelguidedog.org.il/");
-                break;
-            case R.id.link_to_drive:
-                goToUrl("https://drive.google.com/drive/u/1/folders/1tnP3SC9jdjHN-3QWdvIyb17k71k93hdF");
-                break;
-            case R.id.emergency_num:
-                startActivity(new Intent(MapScreenActivity.this, Emergency_numbers.class));
-                break;
-            case R.id.about_section:
-                startActivity(new Intent(MapScreenActivity.this, AboutPage.class));
-                break;
-            case R.id.logout:
-                logout();
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMapHandler.updateCenter();
-        outState.putBoolean("is_more_info_open", moreInfoDrawerLayout.isDrawerOpen(GravityCompat.START));
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        boolean openDrawer = savedInstanceState.getBoolean("is_more_info_open", false);
-        if (openDrawer) {
-            moreInfoDrawerLayout.openDrawer(GravityCompat.START);
-        }
-    }
-
-    private void goToUrl(String s) {
-        Uri url = Uri.parse(s);
-        startActivity(new Intent(Intent.ACTION_VIEW, url));
-    }
-
-
-    public void notificationsActivity(View view) {
-        startActivity(new Intent(getApplicationContext(), UserApprovalActivity.class));
-    }
-
-    public void logout() {
-        // negative is positive and vice versa to allow yes on left and no on right
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to logout?").setCancelable(false);
-        builder.setNegativeButton("Yes", (dialogInterface, i) -> {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            appDB.logoutUser();
-            startActivity(intent);
-        });
-        builder.setPositiveButton("No", (dialogInterface, i) -> dialogInterface.cancel());
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 }

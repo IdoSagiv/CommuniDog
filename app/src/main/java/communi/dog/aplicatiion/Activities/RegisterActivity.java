@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
@@ -19,7 +18,9 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.R;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText emailEditText;
@@ -27,9 +28,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText rePasswordEditText;
     private EditText userNameEditText;
     private Button registerBtn;
-    private TextView to_login_btn;
     private DB db;
-    enum Length{
+
+    enum Length {
         LARGE,
         SHORT,
         VALID
@@ -44,7 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.input_pass_reg);
         rePasswordEditText = findViewById(R.id.input_repass_reg);
         registerBtn = findViewById(R.id.register_bt);
-        to_login_btn = findViewById(R.id.back_to_login);
         userNameEditText = findViewById(R.id.input_user_name_register);
 
         registerBtn.setEnabled(false);
@@ -53,7 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
         this.db.refreshDataUsers();
 
         registerBtn.setOnClickListener(v -> tryToRegister());
-        to_login_btn.setOnClickListener(v ->
+
+        // back to login button callback
+        findViewById(R.id.back_to_login).setOnClickListener(v ->
                 startActivity(new Intent(this, LoginActivity.class)));
 
         findViewById(R.id.registerConstraintLayout).setOnClickListener(v -> {
@@ -121,8 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
         Length nameLen = isValidLength(userNameEditText.getText().toString(), 3, 64);
-        if (nameLen != Length.VALID)
-        {
+        if (nameLen != Length.VALID) {
             valid_input = false;
             String error = nameLen == Length.LARGE ? "name is too large" : "name is too short";
             userNameEditText.setError(error);
@@ -162,14 +163,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private Length isValidLength(String input, int min, int max)
-    {
-        if (max != -1 && input.length() > max)
-        {
+    private Length isValidLength(String input, int min, int max) {
+        if (max != -1 && input.length() > max) {
             return Length.LARGE;
         }
-        if (input.length() < min)
-        {
+        if (input.length() < min) {
             return Length.SHORT;
         }
         return Length.VALID;

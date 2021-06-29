@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -27,7 +27,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.R;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
@@ -94,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             updateLoginButtonState();
         });
 
-        emailEditText.addTextChangedListener(new TextWatcher() {
+        TextWatcher loginTextChangeWatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -104,19 +107,10 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 updateLoginButtonState();
             }
-        });
+        };
 
-        passwordEditText.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            public void afterTextChanged(Editable s) {
-                updateLoginButtonState();
-            }
-        });
+        emailEditText.addTextChangedListener(loginTextChangeWatcher);
+        passwordEditText.addTextChangedListener(loginTextChangeWatcher);
     }
 
     public void updateUI() {
@@ -151,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                     this,
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
-        } else{
+        } else {
             updateUI();
         }
     }
@@ -190,7 +184,6 @@ public class LoginActivity extends AppCompatActivity {
         DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE: {
-                    // finish();
                     finishAffinity();
                     System.exit(0);
                     break;

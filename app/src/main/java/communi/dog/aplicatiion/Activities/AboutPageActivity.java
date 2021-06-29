@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-public class AboutPage extends Activity {
+import communi.dog.aplicatiion.R;
+
+public class AboutPageActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,7 +25,6 @@ public class AboutPage extends Activity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width * .7), (int) (height * .5));
-
     }
 
     private void setupHyperLink() {

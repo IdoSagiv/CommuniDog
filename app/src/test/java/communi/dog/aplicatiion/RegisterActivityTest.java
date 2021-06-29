@@ -1,10 +1,6 @@
 package communi.dog.aplicatiion;
 
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import junit.framework.TestCase;
 
@@ -13,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import communi.dog.aplicatiion.Activities.RegisterActivity;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 28)

@@ -11,6 +11,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import communi.dog.aplicatiion.Activities.LoginActivity;
+
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 28)
 public class LoginActivityTest extends TestCase {

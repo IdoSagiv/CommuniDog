@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".RegisterActivity">
+    tools:context=".Activities.RegisterActivity">
 
     <!-- screen's logo -->
     <ImageView
@@ -61,7 +61,6 @@
                 android:maxLines="1"
                 android:textSize="18sp" />
 
-            <!-- todo: force max number of chars? -->
             <EditText
                 android:id="@+id/input_pass_reg"
                 android:layout_width="match_parent"

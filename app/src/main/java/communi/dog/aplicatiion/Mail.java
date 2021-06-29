@@ -2,6 +2,7 @@ package communi.dog.aplicatiion;
 
 import java.util.Date;
 import java.util.Properties;
+
 import javax.activation.CommandMap;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -21,23 +22,16 @@ import javax.mail.internet.MimeMultipart;
 public class Mail extends javax.mail.Authenticator {
     private String _user;
     private String _pass;
-
     private String[] _to;
     private String _from;
-
-    private String _port;
-    private String _sport;
-
-    private String _host;
-
+    private final String _port;
+    private final String _sport;
+    private final String _host;
     private String _subject;
     private String _body;
-
-    private boolean _auth;
-
-    private boolean _debuggable;
-
-    private Multipart _multipart;
+    private final boolean _auth;
+    private final boolean _debuggable;
+    private final Multipart _multipart;
 
 
     public Mail() {
@@ -76,7 +70,7 @@ public class Mail extends javax.mail.Authenticator {
     public boolean send() throws Exception {
         Properties props = _setProperties();
 
-        if(!_user.equals("") && !_pass.equals("") && _to.length > 0 && !_from.equals("") && !_subject.equals("") && !_body.equals("")) {
+        if (!_user.equals("") && !_pass.equals("") && _to.length > 0 && !_from.equals("") && !_subject.equals("") && !_body.equals("")) {
             Session session = Session.getInstance(props, this);
 
             MimeMessage msg = new MimeMessage(session);
@@ -128,11 +122,11 @@ public class Mail extends javax.mail.Authenticator {
 
         props.put("mail.smtp.host", _host);
 
-        if(_debuggable) {
+        if (_debuggable) {
             props.put("mail.debug", "true");
         }
 
-        if(_auth) {
+        if (_auth) {
             props.put("mail.smtp.auth", "true");
         }
 
@@ -155,18 +149,16 @@ public class Mail extends javax.mail.Authenticator {
 
     public void setTo(String[] toArr) {
         // TODO Auto-generated method stub
-        this._to=toArr;
+        this._to = toArr;
     }
 
     public void setFrom(String string) {
         // TODO Auto-generated method stub
-        this._from=string;
+        this._from = string;
     }
 
     public void setSubject(String string) {
         // TODO Auto-generated method stub
-        this._subject=string;
+        this._subject = string;
     }
-
-    // more of the getters and setters …..
 }

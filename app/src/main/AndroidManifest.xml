@@ -16,24 +16,24 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.CommuniDog">
-        <activity android:name=".UserApprovalActivity" />
-        <activity android:name=".Emergency_numbers" />
+        <activity android:name=".Activities.UserApprovalActivity" />
+        <activity android:name=".Activities.EmergencyNumbersActivity" />
         <activity
-            android:name=".AboutPage"
+            android:name=".Activities.AboutPageActivity"
             android:theme="@style/AppTheme.CustomThemeAbout" />
-        <activity android:name=".ProfilePageActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".WaitForAccessActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.ProfilePageActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.WaitForAccessActivity" />
+        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapScreenActivity" />
-        <activity android:name=".AddMarkerActivity" />
+        <activity android:name=".Activities.MapScreenActivity" />
+        <activity android:name=".Activities.AddMarkerActivity" />
     </application>
 
 </manifest>

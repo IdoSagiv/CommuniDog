@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MapScreenActivity"
+    tools:context=".Activities.MapScreenActivity"
     tools:openDrawer="start">
 
 
@@ -49,18 +49,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/buttonNotificationActivity"
+            android:id="@+id/buttonUserApproval"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/ic_popup_reminder"
             android:onClick="notificationsActivity"
-            app:tint="#A3B11C"
+            android:src="@android:drawable/ic_popup_reminder"
             app:layout_constraintEnd_toStartOf="@+id/buttonMyProfileInMapActivity"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#A3B11C" />
 
         <ImageView
             android:id="@+id/buttonMoreInfoMapActivity"

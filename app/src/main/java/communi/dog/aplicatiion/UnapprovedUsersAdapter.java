@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import communi.dog.aplicatiion.Callbacks.OnApprovalRequestCallback;
+
 public class UnapprovedUsersAdapter extends RecyclerView.Adapter<UnapprovedUserViewHolder> {
     private final ArrayList<User> unapprovedUsers = new ArrayList<>();
-    OnApprovalRequestClickListener onApproveCallback = null;
-    OnApprovalRequestClickListener onDisapproveCallback = null;
+    public OnApprovalRequestCallback onApproveCallback = null;
+    public OnApprovalRequestCallback onDisapproveCallback = null;
 
     public void setItems(ArrayList<User> unapproved) {
         unapprovedUsers.clear();
@@ -24,7 +26,7 @@ public class UnapprovedUsersAdapter extends RecyclerView.Adapter<UnapprovedUserV
     @Override
     public UnapprovedUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.approve_user_item, parent, false); // todo: insert the layout name
+                .inflate(R.layout.approve_user_item, parent, false);
         return new UnapprovedUserViewHolder(view);
     }
 

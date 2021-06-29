@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -13,6 +13,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.MapState;
+import communi.dog.aplicatiion.R;
+import communi.dog.aplicatiion.User;
 
 public class ProfilePageActivity extends AppCompatActivity {
     private User currentUser;
@@ -41,37 +47,20 @@ public class ProfilePageActivity extends AppCompatActivity {
         this.appDB = CommuniDogApp.getInstance().getDb();
         currentUser = this.appDB.getCurrentUser();
 
+        // find views
         usernameEditText = findViewById(R.id.profile_user_name);
         dogNameEditText = findViewById(R.id.profile_dog_name);
         emailEditText = findViewById(R.id.usersEmailMyProfile);
         phoneEditText = findViewById(R.id.usersPhoneMyProfile);
         bioEditText = findViewById(R.id.profile_bio);
         bioEditTextKeyListener = bioEditText.getKeyListener();
-
-        TextView btnMyMarker = findViewById(R.id.profile_to_my_marker);
-        ImageButton btnBackToMap = findViewById(R.id.backToMapFromProfile);
         btnCancelEdit = findViewById(R.id.btnCancelEditProfile);
         btnEditProfile = findViewById(R.id.btnEditProfile);
 
-        dogNameEditText.setEnabled(false);
-        emailEditText.setEnabled(false);
-        phoneEditText.setEnabled(false);
-        bioEditText.setKeyListener(null); // bio edittext won't listen to new keys (cant edit it)
 
-        usernameEditText.setText(currentUser.getUserName());
-        dogNameEditText.setText(currentUser.getUserDogName());
-        emailEditText.setText(currentUser.getEmail());
-        phoneEditText.setText(currentUser.getPhoneNumber());
-        bioEditText.setText(currentUser.getUserDescription());
-
-        btnEditProfile.setOnLongClickListener(v -> {
-            if (isEdit) {
-                Toast.makeText(this, "click to save changes", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "click to edit", Toast.LENGTH_SHORT).show();
-            }
-            return false;
-        });
+        // initialize screen appearance
+        setViewsByState(false);
+        setViewsContentByUser(currentUser);
 
         btnEditProfile.setOnClickListener(v -> {
             if (isEdit) {
@@ -93,7 +82,8 @@ public class ProfilePageActivity extends AppCompatActivity {
             setViewsByState(isEdit);
         });
 
-        btnMyMarker.setOnClickListener(v -> {
+        // my marker button callback
+        findViewById(R.id.profile_to_my_marker).setOnClickListener(v -> {
             MapState mapState = MapState.getInstance();
             if (mapState.getMarker(currentUser.getId()) == null) {
                 Toast.makeText(this, "no marker found", Toast.LENGTH_SHORT).show();
@@ -104,12 +94,25 @@ public class ProfilePageActivity extends AppCompatActivity {
             }
         });
 
+        // cancel edit button callback
         btnCancelEdit.setOnClickListener(v -> cancelEditing());
 
-        btnBackToMap.setOnClickListener(v -> {
+        // back button callback
+        findViewById(R.id.backToMapFromProfile).setOnClickListener(v -> {
             super.onBackPressed();
             finish();
         });
+    }
+
+    /**
+     * sets the views content as the given user fields
+     */
+    private void setViewsContentByUser(User user) {
+        usernameEditText.setText(user.getUserName());
+        dogNameEditText.setText(user.getUserDogName());
+        emailEditText.setText(user.getEmail());
+        phoneEditText.setText(user.getPhoneNumber());
+        bioEditText.setText(user.getUserDescription());
     }
 
     @Override
@@ -145,6 +148,9 @@ public class ProfilePageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * sets the views state according to the given editState
+     */
     private void setViewsByState(boolean isEditState) {
         if (isEditState) {
             btnCancelEdit.setVisibility(View.VISIBLE);

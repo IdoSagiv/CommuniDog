@@ -23,8 +23,9 @@ import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-
 import java.util.Collection;
+
+import communi.dog.aplicatiion.Callbacks.OnMapLongPressCallback;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -32,7 +33,6 @@ public class MapHandler {
     private static final double MAP_DEFAULT_ZOOM = 18.0;
     private static final double MAP_MAX_ZOOM = 20.0;
     private static final double MAP_MIN_ZOOM = 9.0;
-    private static final double MARKERS_MIN_DISPLAY_ZOOM = 15;
     private final MapView mMapView;
     private GeoPoint currentLocation = null;
     private final boolean centerToLoc;
@@ -138,7 +138,7 @@ public class MapHandler {
         mMapView.getOverlays().add(mScaleBarOverlay);
     }
 
-    void mapToCurrentLocation() {
+    public void mapToCurrentLocation() {
         if (currentLocation != null) centerMap(currentLocation, true, true);
     }
 
@@ -161,10 +161,9 @@ public class MapHandler {
         myMarker.setPosition(location);
         myMarker.setTitle(descriptor.getText());
         myMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-        if (currUser != null && currUser.getId().equals(descriptor.getId())){
+        if (currUser != null && currUser.getId().equals(descriptor.getId())) {
             myMarker.setIcon(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_my_marker, context.getTheme()));
-        }
-        else {
+        } else {
             myMarker.setIcon(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_general_marker, context.getTheme()));
         }
         myMarker.setId(descriptor.getId());
@@ -198,11 +197,5 @@ public class MapHandler {
         for (MarkerDescriptor descriptor : markers) {
             showMarkerOnMap(descriptor);
         }
-    }
-
-    MapState currentState() {
-        mapState.setCenter(mMapView.getMapCenter());
-        mapState.setZoom(mMapView.getZoomLevelDouble());
-        return mapState;
     }
 }
