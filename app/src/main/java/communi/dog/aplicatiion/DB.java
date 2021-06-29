@@ -41,6 +41,11 @@ public class DB implements Serializable {
     private final MutableLiveData<ArrayList<User>> unapprovedUsersMutableLiveData = new MutableLiveData<>();
     public final LiveData<ArrayList<User>> unapprovedUsersLiveData = unapprovedUsersMutableLiveData;
 
+    private final MutableLiveData<Boolean> firstLoadFlagMutableLiveData = new MutableLiveData<>();
+    public final LiveData<Boolean> firstLoadFlagLiveData = firstLoadFlagMutableLiveData;
+
+    private boolean firstUsersLoad = false;
+    private boolean firstMapStateLoad = false;
 
     public DB(Context context) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -53,6 +58,8 @@ public class DB implements Serializable {
         this.refreshDataMapState();
         this.mapState = MapState.getInstance();
         this.mAuth = FirebaseAuth.getInstance();
+
+        firstLoadFlagMutableLiveData.postValue(false);
 
         readLastLocationFromSp();
     }
@@ -106,6 +113,17 @@ public class DB implements Serializable {
             }
         };
         mapStateRef.addValueEventListener(valueEventListenerMarkers);
+        mapStateRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                firstMapStateLoad = true;
+                firstLoadFlagMutableLiveData.postValue(firstUsersLoad);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
 
@@ -134,6 +152,17 @@ public class DB implements Serializable {
             }
         };
         usersRef.addValueEventListener(valueEventListenerUsers);
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                firstUsersLoad = true;
+                firstLoadFlagMutableLiveData.postValue(firstMapStateLoad);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     private interface FirebaseCallback {
@@ -205,10 +234,6 @@ public class DB implements Serializable {
         spEditor.remove(SP_CURR_LATITUDE);
         spEditor.remove(SP_CURR_LONGITUDE);
         spEditor.apply();
-    }
-
-    public MapState getMapState() {
-        return mapState;
     }
 
     /**

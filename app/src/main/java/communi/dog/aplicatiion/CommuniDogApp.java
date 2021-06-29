@@ -20,8 +20,4 @@ public class CommuniDogApp extends Application {
     public DB getDb() {
         return localDdb;
     }
-
-    public MapState getMapState() {
-        return localDdb.getMapState();
-    }
 }

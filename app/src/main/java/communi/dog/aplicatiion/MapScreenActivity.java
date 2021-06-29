@@ -42,14 +42,14 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
 
 
         boolean centerToMyLocation = getIntent().getBooleanExtra("center_to_my_location", true);
-        mMapHandler = new MapHandler(findViewById(R.id.mapView), CommuniDogApp.getInstance().getMapState(), centerToMyLocation);
+        mMapHandler = new MapHandler(findViewById(R.id.mapView), MapState.getInstance(), centerToMyLocation);
 
         mMapHandler.setLongPressCallback(p -> {
             Intent intent = new Intent(this, AddMarkerActivity.class);
             String userId = CommuniDogApp.getInstance().getDb().getCurrentUser().getId();
             intent.putExtra("new_latitude", p.getLatitude());
             intent.putExtra("new_longitude", p.getLongitude());
-            if (CommuniDogApp.getInstance().getMapState().hasMarker(userId)) {
+            if (MapState.getInstance().hasMarker(userId)) {
                 Log.i(MapHandler.class.getSimpleName(), "edit existing marker");
                 intent.putExtra("marker_id_to_edit", userId);
             } else {
