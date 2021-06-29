@@ -142,7 +142,7 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
                 startActivity(new Intent(MapScreenActivity.this, EmergencyNumbersActivity.class));
                 break;
             case R.id.about_section:
-                startActivity(new Intent(MapScreenActivity.this, AboutPage.class));
+                startActivity(new Intent(MapScreenActivity.this, AboutPageActivity.class));
                 break;
             case R.id.logout:
                 logout();

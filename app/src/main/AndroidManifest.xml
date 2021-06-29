@@ -19,7 +19,7 @@
         <activity android:name=".Activities.UserApprovalActivity" />
         <activity android:name=".Activities.EmergencyNumbersActivity" />
         <activity
-            android:name=".Activities.AboutPage"
+            android:name=".Activities.AboutPageActivity"
             android:theme="@style/AppTheme.CustomThemeAbout" />
         <activity android:name=".Activities.ProfilePageActivity" />
         <activity android:name=".Activities.RegisterActivity" />

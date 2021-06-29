@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import communi.dog.aplicatiion.R;
 
-public class AboutPage extends Activity {
+public class AboutPageActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
