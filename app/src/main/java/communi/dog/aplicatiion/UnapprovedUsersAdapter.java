@@ -26,7 +26,7 @@ public class UnapprovedUsersAdapter extends RecyclerView.Adapter<UnapprovedUserV
     @Override
     public UnapprovedUserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.approve_user_item, parent, false); // todo: insert the layout name
+                .inflate(R.layout.approve_user_item, parent, false);
         return new UnapprovedUserViewHolder(view);
     }
 
