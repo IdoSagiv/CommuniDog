@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +7,12 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import communi.dog.aplicatiion.Activities.LoginActivity;
+import communi.dog.aplicatiion.Activities.MapScreenActivity;
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.R;
 
 public class WaitForAccessActivity extends AppCompatActivity {
     private DB db;

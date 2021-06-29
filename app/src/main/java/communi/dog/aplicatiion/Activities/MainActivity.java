@@ -1,14 +1,17 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.auth.FirebaseUser;
+
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override

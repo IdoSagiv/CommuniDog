@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Callbacks;
 
 import org.osmdroid.util.GeoPoint;
 

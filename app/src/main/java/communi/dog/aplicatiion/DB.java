@@ -20,6 +20,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import communi.dog.aplicatiion.Callbacks.FirebaseMapStateUpdateCallback;
+import communi.dog.aplicatiion.Callbacks.FirebaseUsersUpdateCallback;
+
 public class DB implements Serializable {
     private final static String SP_NAME = "local_db";
     private final static String SP_CURR_LATITUDE = "latitude";

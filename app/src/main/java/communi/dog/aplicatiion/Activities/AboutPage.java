@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import communi.dog.aplicatiion.R;
 
 public class AboutPage extends Activity {
 

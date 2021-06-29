@@ -26,6 +26,8 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.Collection;
 
+import communi.dog.aplicatiion.Callbacks.OnMapLongPressCallback;
+
 import static android.content.Context.LOCATION_SERVICE;
 
 public class MapHandler {
@@ -138,7 +140,7 @@ public class MapHandler {
         mMapView.getOverlays().add(mScaleBarOverlay);
     }
 
-    void mapToCurrentLocation() {
+    public void mapToCurrentLocation() {
         if (currentLocation != null) centerMap(currentLocation, true, true);
     }
 

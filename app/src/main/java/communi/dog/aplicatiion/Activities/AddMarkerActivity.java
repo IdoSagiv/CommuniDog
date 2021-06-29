@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.MapState;
+import communi.dog.aplicatiion.MarkerDescriptor;
+import communi.dog.aplicatiion.R;
+import communi.dog.aplicatiion.User;
 
 public class AddMarkerActivity extends AppCompatActivity {
     private final static int MISSING_COORD = -1;

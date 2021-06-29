@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.Mail;
+import communi.dog.aplicatiion.R;
+import communi.dog.aplicatiion.UnapprovedUsersAdapter;
 
 public class UserApprovalActivity extends AppCompatActivity {
     private Mail mailAccount;

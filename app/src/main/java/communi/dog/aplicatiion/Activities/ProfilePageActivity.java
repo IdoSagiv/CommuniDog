@@ -1,4 +1,4 @@
-package communi.dog.aplicatiion;
+package communi.dog.aplicatiion.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -13,6 +13,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import communi.dog.aplicatiion.Activities.AddMarkerActivity;
+import communi.dog.aplicatiion.Activities.LoginActivity;
+import communi.dog.aplicatiion.CommuniDogApp;
+import communi.dog.aplicatiion.DB;
+import communi.dog.aplicatiion.MapState;
+import communi.dog.aplicatiion.R;
+import communi.dog.aplicatiion.User;
 
 public class ProfilePageActivity extends AppCompatActivity {
     private User currentUser;

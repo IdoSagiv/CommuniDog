@@ -14,7 +14,7 @@ public class MarkerDescriptor implements Serializable {
     private boolean medication;
     private String id; //final
 
-    MarkerDescriptor(String text, double latitude, double longitude, boolean isDogsitter, boolean isFood, boolean isMedication, String creatorUserId) {
+    public MarkerDescriptor(String text, double latitude, double longitude, boolean isDogsitter, boolean isFood, boolean isMedication, String creatorUserId) {
         this.text = text;
         this.latitude = latitude;
         this.longitude = longitude;
