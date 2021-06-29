@@ -56,11 +56,11 @@
             android:layout_marginEnd="8dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@android:drawable/ic_popup_reminder"
             android:onClick="notificationsActivity"
-            app:tint="#A3B11C"
+            android:src="@android:drawable/ic_popup_reminder"
             app:layout_constraintEnd_toStartOf="@+id/buttonMyProfileInMapActivity"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#A3B11C" />
 
         <ImageView
             android:id="@+id/buttonMoreInfoMapActivity"
