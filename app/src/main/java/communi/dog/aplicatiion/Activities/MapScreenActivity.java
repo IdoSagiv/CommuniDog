@@ -139,7 +139,7 @@ public class MapScreenActivity extends AppCompatActivity implements NavigationVi
                 goToUrl("https://drive.google.com/drive/u/1/folders/1tnP3SC9jdjHN-3QWdvIyb17k71k93hdF");
                 break;
             case R.id.emergency_num:
-                startActivity(new Intent(MapScreenActivity.this, Emergency_numbers.class));
+                startActivity(new Intent(MapScreenActivity.this, EmergencyNumbersActivity.class));
                 break;
             case R.id.about_section:
                 startActivity(new Intent(MapScreenActivity.this, AboutPage.class));

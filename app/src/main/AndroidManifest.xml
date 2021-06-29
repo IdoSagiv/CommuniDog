@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CommuniDog">
         <activity android:name=".Activities.UserApprovalActivity" />
-        <activity android:name=".Activities.Emergency_numbers" />
+        <activity android:name=".Activities.EmergencyNumbersActivity" />
         <activity
             android:name=".Activities.AboutPage"
             android:theme="@style/AppTheme.CustomThemeAbout" />
