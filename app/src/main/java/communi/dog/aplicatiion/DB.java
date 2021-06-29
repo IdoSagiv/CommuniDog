@@ -94,6 +94,9 @@ public class DB implements Serializable {
         });
     }
 
+    /**
+     * on change in the db, read the map's data
+     */
     private void readDataMapState(FirebaseMapStateUpdateCallback firebaseCallback) {
         ValueEventListener valueEventListenerMarkers = new ValueEventListener() {
             @Override
@@ -130,6 +133,9 @@ public class DB implements Serializable {
         });
     }
 
+    /**
+     * on change in the db, read the users' data
+     */
     private void readDataIdsInUse(FirebaseUsersUpdateCallback firebaseCallback) {
         ValueEventListener valueEventListenerUsers = new ValueEventListener() {
             @Override
@@ -171,11 +177,17 @@ public class DB implements Serializable {
         });
     }
 
+    /**
+     * add user to db
+     */
     public void addUser(String userId, String userEmail, String userName) {
         User newUser = new User(userId, userEmail, userName);
         this.usersRef.child(userId).setValue(newUser);
     }
 
+    /**
+     * update user in db
+     */
     public void updateUser(String userId, String userEmail, String userName, String phoneNumber, String dogName, String userDescription,
                            boolean isManager, boolean isApproved) {
         User newUser = new User(userId, userEmail, userName, phoneNumber, dogName, userDescription, isManager, isApproved);
@@ -188,6 +200,9 @@ public class DB implements Serializable {
         });
     }
 
+    /**
+     * @return true iff there is a registered user with the same email address
+     */
     public boolean idUserExists(String email) {
         for (User user : users.values()) {
             if (user.getEmail().equals(email)) return true;
@@ -195,6 +210,9 @@ public class DB implements Serializable {
         return false;
     }
 
+    /**
+     * update the current user
+     */
     public void setCurrentUser(FirebaseUser user) {
         if (user != null) {
             this.currentFbUser = user;
