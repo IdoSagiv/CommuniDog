@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class DB implements Serializable {
     private final static String SP_NAME = "local_db";
@@ -92,8 +91,7 @@ public class DB implements Serializable {
         });
     }
 
-
-    private void readDataMapState(DB.FirebaseCallbackMapState firebaseCallback) {
+    private void readDataMapState(FirebaseMapStateUpdateCallback firebaseCallback) {
         ValueEventListener valueEventListenerMarkers = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -112,7 +110,10 @@ public class DB implements Serializable {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
+        // update data and relevant liveData
         mapStateRef.addValueEventListener(valueEventListenerMarkers);
+
+        // notifies first load
         mapStateRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -126,8 +127,7 @@ public class DB implements Serializable {
         });
     }
 
-
-    private void readDataIdsInUse(DB.FirebaseCallback firebaseCallback) {
+    private void readDataIdsInUse(FirebaseUsersUpdateCallback firebaseCallback) {
         ValueEventListener valueEventListenerUsers = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -151,7 +151,10 @@ public class DB implements Serializable {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
+        // update data and relevant liveData
         usersRef.addValueEventListener(valueEventListenerUsers);
+
+        // notifies first load
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -163,14 +166,6 @@ public class DB implements Serializable {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-    }
-
-    private interface FirebaseCallback {
-        void onCallback(HashMap<String, User> users);
-    }
-
-    private interface FirebaseCallbackMapState {
-        void onCallbackMapState(MapState mapState);
     }
 
     public void addUser(String userId, String userEmail, String userName) {
