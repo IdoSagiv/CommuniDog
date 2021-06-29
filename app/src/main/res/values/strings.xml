@@ -71,6 +71,7 @@
     <string name="loading">loading…</string>
     <string name="logout">Logout</string>
     <string name="no_users_to_approve">no users to approve</string>
+    <string name="account_under_review">Your account is being reviewed\nWe notify you when it is approved</string>
 
 
 </resources>
