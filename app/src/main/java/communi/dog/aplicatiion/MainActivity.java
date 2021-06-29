@@ -2,6 +2,7 @@ package communi.dog.aplicatiion;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,29 +15,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wait_screen);
+        // disable dark mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        //updateUI(CommuniDogApp.getInstance().getDb().getUsersAuthenticator().getCurrentUser());
-        FirebaseUser currentUser = CommuniDogApp.getInstance().getDb().getUsersAuthenticator().getCurrentUser();
-        new Handler().postDelayed(() -> {
-            updateUI(currentUser);
-        }, 3000);
+
+        DB db = CommuniDogApp.getInstance().getDb();
+
+        FirebaseUser currentUser = db.getUsersAuthenticator().getCurrentUser();
+
+        // update UI when DB finish to load the initial data
+        db.firstLoadFlagLiveData.observe(this, isLoad -> {
+            if (isLoad) {
+                updateUI(currentUser);
+            }
+        });
     }
 
-    private void updateUI(FirebaseUser user) {
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-        //todo: need to fix synchronization problems in the remember logged in users
-//        if (user != null) {
-//            DB db = CommuniDogApp.getInstance().getDb();
-//            db.setCurrentUser(user);
-//            db.currentUSerLiveData.observe(this, user1 -> {
-//                startActivity(new Intent(this, MapScreenActivity.class));
-//                finish();
-//            });
-//
-//        } else {
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
-//        }
+    /**
+     * if there is a logged in user -> navigate to the map screen, else navigate to the login screen
+     *
+     * @param firebaseUser - the currently logged in user, null if no user os logged in
+     */
+    private void updateUI(FirebaseUser firebaseUser) {
+
+        if (firebaseUser != null) {
+            DB db = CommuniDogApp.getInstance().getDb();
+            db.setCurrentUser(firebaseUser);
+            db.currentUserLiveData.observe(this, user -> {
+                if (user != null) {
+                    startActivity(new Intent(this, MapScreenActivity.class));
+                    finish();
+                }
+            });
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
 }

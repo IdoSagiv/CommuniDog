@@ -28,7 +28,7 @@ public class AddMarkerActivity extends AppCompatActivity {
         ImageView buttonSaveMarker = findViewById(R.id.buttonSaveMarker);
         ImageView buttonDeleteMarker = findViewById(R.id.buttonDeleteMarker);
 
-        mapState = CommuniDogApp.getInstance().getMapState();
+        mapState = MapState.getInstance();
         final MarkerDescriptor markerToEdit = mapState.getMarker(incomingIntent.getStringExtra("marker_id_to_edit"));
 
         if (markerToEdit != null) {

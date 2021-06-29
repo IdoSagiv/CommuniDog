@@ -68,6 +68,7 @@
     <string name="my_marker">My marker</string>
     <string name="phone_number_field">Phone number</string>
     <string name="email_field">Email address</string>
+    <string name="loading">loading…</string>
 
 
 </resources>

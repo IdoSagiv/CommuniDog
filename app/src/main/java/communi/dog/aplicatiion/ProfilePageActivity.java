@@ -94,7 +94,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         });
 
         btnMyMarker.setOnClickListener(v -> {
-            MapState mapState = CommuniDogApp.getInstance().getMapState();
+            MapState mapState = MapState.getInstance();
             if (mapState.getMarker(currentUser.getId()) == null) {
                 Toast.makeText(this, "no marker found", Toast.LENGTH_SHORT).show();
             } else {

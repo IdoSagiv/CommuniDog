@@ -15,18 +15,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_full" />
 
+    <TextView
+        android:id="@+id/loadingEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/loading"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_wait_screen" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationLoadingOrder"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="32dp"
         android:layout_weight="4"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/loadingEditText"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/dog_icon"
-        app:layout_constraintTop_toBottomOf="@id/logo_wait_screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:lottie_rawRes="@raw/dog_animation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
