@@ -72,6 +72,11 @@
     <string name="logout">Logout</string>
     <string name="no_users_to_approve">no users to approve</string>
     <string name="account_under_review">Your account is being reviewed\nWe notify you when it is approved</string>
+    <string name="logout_string_at_menu">Logout</string>
+    <string name="emergency_numbers_at_menu">emergency numbers</string>
+    <string name="qa_drive_link">QA drive link</string>
+    <string name="israeli_guide_dog_center_website_at_menu">Israeli Guide Dog Center website</string>
+    <string name="non_discrimination_law_at_menu">Non-discrimination law</string>
 
 
 </resources>

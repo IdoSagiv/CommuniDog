@@ -7,25 +7,25 @@
         <item
             android:id="@+id/law"
             android:icon="@drawable/law_icon"
-            android:title="Non-discrimination law"
+            android:title="@string/non_discrimination_law_at_menu"
             android:checkable="false"/>
 
         <item
             android:id="@+id/dog_site_link"
             android:icon="@drawable/earth_site_icon"
-            android:title="Israeli Guide Dog Center website"
+            android:title="@string/israeli_guide_dog_center_website_at_menu"
             android:checkable="false"/>
 
         <item
             android:id="@+id/link_to_drive"
             android:icon="@drawable/question_answer"
-            android:title="QA drive link"
+            android:title="@string/qa_drive_link"
             android:checkable="false"/>
 
         <item
             android:id="@+id/emergency_num"
             android:icon="@drawable/ic_phone"
-            android:title="emergency numbers"
+            android:title="@string/emergency_numbers_at_menu"
             android:checkable="false"/>
 
         <item
@@ -36,16 +36,13 @@
 
     </group>
 
-
     <group
         android:checkableBehavior="single"
         android:id="@+id/logoutPart">
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_baseline_exit"
-            android:checkable="false" />
-            android:title="Logout" />
+            android:checkable="false"
+            android:title="@string/logout_string_at_menu" />
     </group>
-
-
 </menu>
